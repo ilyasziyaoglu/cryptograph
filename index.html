@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Network Security</title>
+
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="container" id="container">
+        <h1 style="text-align: center;">LAT and DDT Table Calculation</h1>
+        <p>If you have a calculated <b>S-Box</b>, you can continue just by setting object space <b>n</b> which is in GF(2<sup><b>n</b></sup>) below.</p>
+        <ol>
+            <li>To set object space use the input box at top-right of <b>GF(2)</b></li>
+            <li>Then push 'Prepare Inputs' button and scroll down to set <b>S-Box</b></li>
+            <li>Push 'Update S-Box From Inputs' button to read inserted values from S-Box table</li>
+            <li>Follow blue buttons</li>
+        </ol>
+        <p>Else you must set all parameters below.</p>
+        <ol>
+            <li>To set mapping parameter use the input box at top-right of <b>X --> X</b></li>
+            <li>To set object space use the input box at top-right of <b>GF(2)</b></li>
+            <li>To set irreducible polynomial use zero and ones like <b>10011</b> instead of <b>X<sup>4</sup> + X + 1</b></li>
+            <li>Follow blue buttons</li>
+        </ol>
+        <p><b>Note: </b>You can surfe between input boxes by using <b>Tab</b> key.</p>
+
+        <h3>Inputs</h3>
+        <hr>
+        <div class="row inputs">
+            <div class="col">
+                <p>X -->  X<sup><input id="target" type="text" style="width: 18px; height: 13px;"></sup></p>
+            </div>
+            <div class="col">
+                <p>GF(2<sup><input id="n" type="text" style="width: 13px; height: 13px;"></sup>)</p>
+            </div>
+            <div class="col">
+                <p>Irreducible polynomial: <input id="polinom" type="text"></p>
+            </div>
+            <div class="col-sm-2">
+                <button id="submit" type="button", class="btn btn-primary float-right">Prepare Inputs</button>
+            </div>
+        </div>
+        <h3>Mod and Polinom</h3>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <p id="mod"></p>
+            </div>
+            <div class="col">
+                <p id="pol"></p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col"><h3>Objects</h3></div>
+            <div class="col-sm-3"><button id="create-objects" type="button" class="btn btn-primary float-right">Create Objects</button></div>
+        </div> 
+        <hr>
+        <div class="row">
+            <table class="table table-striped">
+                <thead><tr id="table-head"></tr></thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+        
+        <div class="row">
+            <div class="col"><h3>S-Box</h3></div>
+            <div class="col-sm-3"><button id="create-sbox" type="button" class="btn btn-primary float-right">Create S-Box From Objects</button></div>
+        </div> 
+        <hr>
+        <div class="row">
+            <div class="col-sm-10">
+                <table class="table table-bordered">
+                    <thead><tr id="sbox-table-head"></tr></thead>
+                    <tbody><tr id="sbox-table-body"></tr></tbody>
+                </table>
+            </div>
+            <div class="col-sm-2">
+                
+                <button id="update-sbox" type="button" class="btn btn-primary">Update S-Box From Inputs</button>
+            </div>
+        </div>
+        
+        <br>
+        <div class="row">
+            <div class="col"><h3>LAT Table</h3></div>
+            <div class="col-sm-3">
+                <button id="set-lat-table" class="btn btn-primary float-right" type="button">LAT Table</button>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <table class="table table-hover table-bordered">
+                <thead><tr id="lat-table-head"></tr></thead>
+                <tbody id="lat-table-body"></tbody>
+            </table>
+        </div>
+        
+        <br>
+        <div class="row">
+            <div class="col"><h3>DDT Table</h3></div>
+            <div class="col-sm-3">
+                <button id="set-ddt-table" class="btn btn-primary float-right" type="button">DDT Table</button>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <table class="table table-hover table-bordered">
+                <thead><tr id="ddt-table-head"></tr></thead>
+                <tbody id="ddt-table-body"></tbody>
+            </table>
+        </div>
+        <hr>
+    </div>
+    <script src="public/js/index.js"></script>
+    <script src="public/js/lat.js"></script>
+    <script src="public/js/ddt.js"></script>
+</body>
+</html>

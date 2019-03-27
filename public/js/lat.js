@@ -16,17 +16,18 @@ $(document).ready(function(){
         prepareLatTable(SBox)
         latTable = calcLatTable(SBox)
         setLatTable(latTable)
+        document.getElementById('non-linearity').innerText = 'Nonlinearity: %' + (Math.round(nonLinearity(latTable) * 100) / 100)
     }
 
     prepareLatTable = function(SBox){
         var head = document.getElementById('lat-table-head')
         var body = document.getElementById('lat-table-body')
 
-        head.appendChild(createElement('th', {scope: 'col', innerText: '#'}))
+        head.appendChild(createElement('th', {scope: 'col', innerText: '#', style: 'text-align: center;'}))
         for(var i = 0; i < SBox.length; i++){
-            head.appendChild(createElement('th', {scope: 'col', innerText: SBox[i][0]}))
+            head.appendChild(createElement('th', {scope: 'col', style: 'text-align: center;', innerText: SBox[i][0]}))
             var tr = createElement('tr')
-            tr.appendChild(createElement('th', {scope: 'row', innerText: SBox[i][0]}))
+            tr.appendChild(createElement('th', {scope: 'row', style: 'text-align: center;', innerText: SBox[i][0]}))
             body.appendChild(tr)
         }
     }
@@ -36,7 +37,7 @@ $(document).ready(function(){
 
         for(var i = 0; i < latTable.length; i++){
             for(var j = 0; j < latTable[0].length; j++){
-                body.childNodes[i].appendChild(createElement('td', {innerText: latTable[j][i]}))
+                body.childNodes[i].appendChild(createElement('td', {innerText: latTable[i][j], style: 'text-align: center;'}))
             }
         }
     }

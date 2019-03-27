@@ -24,6 +24,8 @@ var getHexMapping
 var prepareSBoxTable
 var setSBoxTable
 var getSBoxTable
+var nonLinearity
+var NLMs
 
 $(document).ready(function(){
 
@@ -185,12 +187,12 @@ $(document).ready(function(){
             if(objects[i] == 1){
                 return objects
             }
-        }
-        return objects
+            return objects
     }
-
+    
     getPolinomObjects = function(binaryObjects){
         var polinomObjects = []
+    }
         for(var i = 0; i < binaryObjects.length; i++){
             polinomObjects.push(binaryToPolinom(binaryObjects[i]))
         }
@@ -245,5 +247,23 @@ $(document).ready(function(){
         return hexMapView
     }
 
+    nonLinearity = function(table){
+        var nlms = NLMs(table)
+        var nonLinearity = Math.pow(2, n-1) - Math.pow(2, (n/2)-1)
+        return (nlms * 100/nonLinearity)
+    }
 
+    NLMs = function(table){
+        var max = 0, val = 0
+        table[0][0] = 0
+        for(var i = 1; i < table.length; i++){
+            for(var j = 0; j < table.length; j++){
+                val = Math.abs(table[i][j])
+                if(max < val){
+                    max = val
+                }
+            }
+        }
+        return (Math.pow(2, n-1) - max)
+    }
 })

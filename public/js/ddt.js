@@ -16,17 +16,18 @@ $(document).ready(function(){
         prepareDdtTable(SBox)
         ddtTable = calcDdtTable(SBox)
         setDdtTable(ddtTable)
+        console.log(nonLinearity(ddtTable))
     }
 
     prepareDdtTable = function(SBox){
         var head = document.getElementById('ddt-table-head')
         var body = document.getElementById('ddt-table-body')
 
-        head.appendChild(createElement('th', {scope: 'col', innerText: '#'}))
+        head.appendChild(createElement('th', {scope: 'col', innerText: '#', style: 'text-align: center;'}))
         for(var i = 0; i < SBox.length; i++){
-            head.appendChild(createElement('th', {scope: 'col', innerText: SBox[i][0]}))
+            head.appendChild(createElement('th', {scope: 'col', innerText: SBox[i][0], style: 'text-align: center;'}))
             var tr = createElement('tr')
-            tr.appendChild(createElement('th', {scope: 'row', innerText: SBox[i][0]}))
+            tr.appendChild(createElement('th', {scope: 'row', innerText: SBox[i][0], style: 'text-align: center;'}))
             body.appendChild(tr)
         }
     }
@@ -36,7 +37,7 @@ $(document).ready(function(){
 
         for(var i = 0; i < ddtTable.length; i++){
             for(var j = 0; j < ddtTable[0].length; j++){
-                body.childNodes[i].appendChild(createElement('td', {innerText: ddtTable[i][j]}))
+                body.childNodes[i].appendChild(createElement('td', {innerText: ddtTable[i][j], style: 'text-align: center;'}))
             }
         }
     }

@@ -16,7 +16,6 @@ $(document).ready(function(){
         prepareDdtTable(SBox)
         ddtTable = calcDdtTable(SBox)
         setDdtTable(ddtTable)
-        console.log(nonLinearity(ddtTable))
     }
 
     prepareDdtTable = function(SBox){

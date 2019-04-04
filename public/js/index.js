@@ -187,12 +187,12 @@ $(document).ready(function(){
             if(objects[i] == 1){
                 return objects
             }
-            return objects
+        }
+        return objects
     }
     
     getPolinomObjects = function(binaryObjects){
         var polinomObjects = []
-    }
         for(var i = 0; i < binaryObjects.length; i++){
             polinomObjects.push(binaryToPolinom(binaryObjects[i]))
         }

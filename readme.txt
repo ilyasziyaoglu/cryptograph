@@ -10,7 +10,7 @@
 ##	* Can create S-Box								##
 ##	* create S-Box's Linear Conversion and Difference Distribution Tables		##
 ##	* You can calculate the non-linearity ratio of S-Box.				##
-##											##	
+##											##
 ##	Cryptograph continues to evolve and DES and AES algorithms will be added.	##
 ##											##
 ##########################################################################################

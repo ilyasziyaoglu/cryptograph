@@ -13,7 +13,7 @@
 											
 											
 											
-	Language: Java Script								
+	Programming Language: Java Script								
 	Interface: HTML5, CSS								
 	Frameworks: Bootstrap 4, JQuery							
 	IDE: Visual Studio Code								

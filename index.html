@@ -17,10 +17,10 @@
 </head>
 <body>
     <div class="container" id="container">
-        <h1 style="text-align: center;">LAT and DDT Table Calculation</h1>
+        <h1 style="text-align: center;">CRYPTOGRAPH</h1>
         <p>If you have a calculated <b>S-Box</b>, you can continue just by setting object space <b>n</b> which is in GF(2<sup><b>n</b></sup>) below.</p>
         <ol>
-            <li>To set object space use the input box at top-right of <b>GF(2)</b></li>
+            <li>To set object space(Galois Field) use the input box at top-right of <b>GF(2)</b></li>
             <li>Then push 'Prepare Inputs' button and scroll down to set <b>S-Box</b></li>
             <li>Push 'Update S-Box From Inputs' button to read inserted values from S-Box table</li>
             <li>Follow blue buttons</li>
@@ -28,8 +28,9 @@
         <p>Else you must set all parameters below.</p>
         <ol>
             <li>To set mapping parameter use the input box at top-right of <b>X --> X</b></li>
-            <li>To set object space use the input box at top-right of <b>GF(2)</b></li>
-            <li>To set irreducible polynomial use zero and ones like <b>10011</b> instead of <b>X<sup>4</sup> + X + 1</b></li>
+            <li>To set object space(Galois Field) use the input box at top-right of <b>GF(2)</b></li>
+            <li>To set irreducible polynomial click down arrow on the right of the input box and choose one of them</br>Or use zero and ones like <b>10011</b> instead of <b>X<sup>4</sup> + X + 1</b></li>
+            <li>Click <b>Update S-Box From Inputs</b> button</li>
             <li>Follow blue buttons</li>
         </ol>
         <p><b>Note: </b>You can surfe between input boxes by using <b>Tab</b> key.</p>
@@ -41,10 +42,10 @@
                 <p>X -->  X<sup><input id="target" type="text" style="width: 18px; height: 13px;"></sup></p>
             </div>
             <div class="col">
-                <p>GF(2<sup><input id="n" type="text" style="width: 13px; height: 13px;"></sup>)</p>
+                <p>GF(2<sup><input id="n" type="text" style="width: 18px; height: 13px;"></sup>)</p>
             </div>
             <div class="col">
-                <p>Irreducible polynomial: <input id="polinom" type="text"></p>
+                <p>Irreducible prime polynomial: <input id="polinom" type="text" list="datalist"/><datalist id="datalist"></datalist></p>
             </div>
             <div class="col-sm-2">
                 <button id="submit" type="button", class="btn btn-primary float-right">Prepare Inputs</button>
@@ -67,6 +68,7 @@
         </div> 
         <hr>
         <div class="row">
+            <div id="bad-polinom" class="alert alert-danger" role="alert" style="display: none;">Polynomial is not irreducible and prime polynomial!</div>
             <table class="table table-striped">
                 <thead><tr id="table-head"></tr></thead>
                 <tbody id="table-body"></tbody>
@@ -79,15 +81,14 @@
         </div> 
         <hr>
         <div class="row">
+            <div class="col-sm-2">
+                <button id="update-sbox" type="button" class="btn btn-primary">Update S-Box From Inputs</button>
+            </div>
             <div class="col-sm-10">
                 <table class="table table-bordered">
                     <thead><tr id="sbox-table-head"></tr></thead>
                     <tbody><tr id="sbox-table-body"></tr></tbody>
                 </table>
-            </div>
-            <div class="col-sm-2">
-                
-                <button id="update-sbox" type="button" class="btn btn-primary">Update S-Box From Inputs</button>
             </div>
         </div>
         

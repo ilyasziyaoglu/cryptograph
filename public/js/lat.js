@@ -5,6 +5,8 @@ var calcLatTable
 var latValue
 var latXOR
 var setLatTable
+var nonLinearity
+var NLMs
 
 $(document).ready(function(){
     document.getElementById('set-lat-table').onclick = function(){
@@ -84,5 +86,34 @@ $(document).ready(function(){
             }
         }
         return (((a + b) % 2) + 1) % 2
+    }
+
+    nonLinearity = function(table){
+        var nlms = NLMs(table)
+        var nonLinearity = Math.pow(2, n-1) - Math.pow(2, (n/2)-1)
+        return (nlms * 100/nonLinearity)
+    }
+
+    NLMs = function(table){
+        var max = 0
+        var val = 0
+        table[0][0] = 0
+
+        // getting absolute values
+        for(var i = 1; i < table.length; i++){
+            for(var j = 1; j < table.length; j++){
+                table[i][j] = Math.abs(table[i][j])
+            }
+        }
+
+        // getting max value
+        for(var i = 1; i < table.length; i++){
+            val = Math.max.apply(null, table[i])
+            if(max < val){
+                max = val
+            }
+        }
+        
+        return (Math.pow(2, n-1) - max)
     }
 })

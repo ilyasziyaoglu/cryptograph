@@ -8,6 +8,8 @@ var binaryObjects
 var mapTable
 var SBox
 var sbox = 0
+var IrreduciblePrimePols
+
 
 var createElement
 var readInputs
@@ -19,15 +21,31 @@ var objectCreation
 var getPolinomObjects
 var getBinaryObjects
 var mapping
-var getMappingView
 var getHexMapping
+var getMappingView
 var prepareSBoxTable
 var setSBoxTable
 var getSBoxTable
-var nonLinearity
-var NLMs
+var findIrreduciblePrimePols
+
 
 $(document).ready(function(){
+
+    document.getElementById('n').onchange = function(){
+        document.getElementById('polinom').value = '' // clearing content when n changed
+        n = parseFloat(this.value) // getting value of n
+
+        polinoms = findIrreduciblePrimePols(n) // finding all irreducible and prime polinoms for n
+        
+        // handling datalist element and clearing content
+        var datalist = document.getElementById('datalist')
+        datalist.innerHTML = ''
+
+        // push polinoms to datalist
+        for(var i in polinoms){
+            datalist.appendChild(createElement('option', {value: polinoms[i], innerHTML: binaryToPolinom(polinoms[i])}))
+        }
+    }
 
     document.getElementById('submit').onclick = function(){
         readInputs()
@@ -40,6 +58,7 @@ $(document).ready(function(){
     }
 
     document.getElementById('create-objects').onclick = function(){
+        document.getElementById('bad-polinom').style.display = 'none'
         document.getElementById('table-head').innerHTML = ''
         document.getElementById('table-body').innerHTML = ''
 
@@ -50,12 +69,17 @@ $(document).ready(function(){
         tableSetCol('Objects', polinomObjects)
         tableSetCol('Binaries', binaryObjects)
 
-        mapTable = mapping(objects.length, target, mod)
-        var mapView = getMappingView(mapTable)
-        tableSetCol('Mapping', mapView)
-        hexMap = getHexMapping(mapTable, objects)
-        var hexMapView = getHexMappingView(hexMap)
-        tableSetCol('Hex Mapping', hexMapView)
+        if(objects.length == mod + 1){ // if polynomial is irreducible and prime polynomial
+            mapTable = mapping(objects.length, target, mod)
+            var mapView = getMappingView(mapTable)
+            tableSetCol('Mapping', mapView)
+            hexMap = getHexMapping(mapTable, objects)
+            var hexMapView = getHexMappingView(hexMap)
+            tableSetCol('Hex Mapping', hexMapView)
+        }
+        else {
+            document.getElementById('bad-polinom').style.display = 'block'
+        }
     }
 
     document.getElementById('create-sbox').onclick = function(){
@@ -138,14 +162,14 @@ $(document).ready(function(){
         var len = binary.length - 1
         for(var i = len; i >= 0; i--){
             if(binary[i] == '1' && i == len){
-                polinom = '1'
+                polinom = 'X<sup>0</sup>'
             }
             else if(binary[i] == '1' && i == len - 1){
                 if(polinom == ''){
-                    polinom = 'X'
+                    polinom = 'X<sup>1</sup>'
                 }
                 else {
-                    polinom = 'X + ' + polinom
+                    polinom = 'X<sup>1</sup> + ' + polinom
                 }
             }
             else if(binary[i] == '1' && i < len - 1){
@@ -172,20 +196,28 @@ $(document).ready(function(){
 
     objectCreation = function(n, polinom){
         var len = Math.pow(2, n)
-        var objects = [0]
+        var objects = [1]
         var temp = 1
         for(var i = 1; i < len; i++){
             temp = temp << 1
-            if(temp >= Math.pow(2, n)){
+            if(temp >= len){
                 temp = parseInt(int2binstr(temp, n+1).slice(1, n+1), 2)^parseInt(polinom.slice(1, polinom.length), 2)
-                objects.push(temp)
+                if(objects.includes(temp)){
+                    objects.push(temp)
+                    return objects
+                }
+                else{
+                    objects.push(temp)
+                }
             }
             else{
-                objects.push(temp)
-            }
-
-            if(objects[i] == 1){
-                return objects
+                if(objects.includes(temp)){
+                    objects.push(temp)
+                    return objects
+                }
+                else {
+                    objects.push(temp)
+                }
             }
         }
         return objects
@@ -208,15 +240,15 @@ $(document).ready(function(){
     }
 
     mapping = function(objectLength, target, mod){
-        mapTable = []
+        mapTable = [[0, 0]]
         var map
-        for(var i = 0; i < objectLength; i++){
+        for(var i = 1; i < objectLength; i++){
             map = (i * target) % mod
             if(map < 0){
                 mapTable.push([i, mod + map])
             }
             else {
-                mapTable.push([i, map])
+                mapTable.push([i, -map])
             }
         }
         return mapTable
@@ -232,8 +264,8 @@ $(document).ready(function(){
     }
 
     getHexMapping = function(mapTable, objects){
-        var hexMap = []
-        for(var i = 0; i < mapTable.length; i++){
+        var hexMap = [["0", "0"]]
+        for(var i = 1; i < mapTable.length; i++){
             hexMap.push([objects[mapTable[i][0]].toString(16).toUpperCase(), objects[mapTable[i][1]].toString(16).toUpperCase()])
         }
         return hexMap
@@ -247,23 +279,27 @@ $(document).ready(function(){
         return hexMapView
     }
 
-    nonLinearity = function(table){
-        var nlms = NLMs(table)
-        var nonLinearity = Math.pow(2, n-1) - Math.pow(2, (n/2)-1)
-        return (nlms * 100/nonLinearity)
+    reset = function(){
+        target = undefined
+        n = undefined
+        polinom = undefined
+        mod = undefined
+        objects = undefined
+        polinomObjects = undefined
+        binaryObjects = undefined
+        mapTable = undefined
+        SBox = undefined
+        sbox = 0
     }
 
-    NLMs = function(table){
-        var max = 0, val = 0
-        table[0][0] = 0
-        for(var i = 1; i < table.length; i++){
-            for(var j = 0; j < table.length; j++){
-                val = Math.abs(table[i][j])
-                if(max < val){
-                    max = val
-                }
+    findIrreduciblePrimePols = function(n){
+        mod = Math.pow(2, n) - 1
+        IrreduciblePrimePols = []
+        for(var i = mod + 2; i < Math.pow(2, n+1); i++){
+            if(objectCreation(n, i.toString(2)).length == mod + 1){
+                IrreduciblePrimePols.push(i.toString(2))
             }
         }
-        return (Math.pow(2, n-1) - max)
+        return IrreduciblePrimePols
     }
 })

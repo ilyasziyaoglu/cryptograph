@@ -3,6 +3,7 @@
 											
 											
 	With Cryptograph:									
+	* *new* can faind all Irreducible and prime polynomials for all Galois Field automatically
 	* can produce finite fields in desired space						
 	* Can map these objects to create S-Box						
 	* Can create S-Box									

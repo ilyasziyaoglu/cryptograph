@@ -1,9 +1,6 @@
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~											~~
 ~~					CRYPTOGRAPH					~~
 ~~											~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~											~~
 ~~	With Cryptograph:								~~
 ~~	* can produce finite fields in desired space					~~
@@ -14,7 +11,6 @@
 ~~											~~
 ~~	Cryptograph continues to evolve and DES and AES algorithms will be added.	~~
 ~~											~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~											~~
 ~~											~~
 ~~	Language: Java Script								~~
@@ -29,4 +25,3 @@
 ~~	* Go to project home directory then find 'index.html' file and open 		~~
 ~~	  with any internet browser.							~~
 ~~											~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
